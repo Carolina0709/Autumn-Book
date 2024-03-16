@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html>
+    <head th:replace="~{/fragments/head :: head}"></head>
+    <body>
+        <nav th:replace="~{/fragments/nav :: nav}"></nav>
+    </body>
+    
+    <main class="container-fluid ctn-main">
+            <div class="container d-lg-flex pb-5">
+                <div
+                    class="w-100 d-flex flex-column justify-content-center align-items-start"
+                    >
+                    <h1 class="display-2" th:text="${book.name}"></h1>
+                    <p class="pt-2 lead">
+                        Embark on a journey into a world of adventure and emotion, with this captivating read 
+                    </p>
+                </div>
+                <div class="w-100 d-flex justify-content-center align-items-center">
+                    <div class="ctn-img">
+                        <img class="item-img" th:src="'/image/books/' + ${book.id}" alt="Book image" />
+                        <div class="mask"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div
+                class="container d-flex justify-content-center flex-column align-items-center pb-5"
+                >
+                <p class="display-6 p-2 title-wine">Foreword</p>
+                <p class="pt-2 lead p-lg-5 text-center w-lg-50" th:text="${book.foreword}"></p>
+
+                <div class="row d-flex justify-content-center ">
+                    <div class="w-50 col-lg-4 col-md-6 d-flex justify-content-center pt-3">
+                        <div class="card w-100 h-100">
+                            <div class="w-100 h-100" style="background-color: #b07f53">
+                                <img
+                                    th:src="'/image/authors/' + ${author.id}"
+                                    class="card-img-top w-100 h-100 object-fit-cover"
+                                    alt="Author image"
+                                    />
+                            </div>
+                            
+                            <div class="card-body h-100 d-flex flex-column justify-content-between">
+                                <div>
+                                    <h5 class="card-title">Author</h5>
+                                    <p class="card-text" th:text="${author.name}"></p>
+                                </div>
+                                <div class="d-flex justify-content-end">
+                                    <a th:href="'../../authors/see/' + ${author.id}" class="btn btn-primary mx-1 btn-wine"><i class="bi bi-eye-fill"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-50 col-lg-4 col-md-6 d-flex justify-content-center pt-3">
+                        <div class="card w-100 h-100">
+                            <img
+                                th:src="'/image/publishers/' + ${publisher.id}"
+                                class="card-img-top w-100 h-100 object-fit-cover"
+                                alt="Publisher image"
+                                />
+                            <div class="card-body h-100 d-flex flex-column justify-content-between">
+                                <div>
+                                    <h5 class="card-title" >Publisher</h5>
+                                    <p class="card-text" th:text="${publisher.name}"></p>
+                                </div>
+                                <div class="d-flex justify-content-end">
+                                     <a th:href="'../../publishers/see/' + ${publisher.id}" class="btn btn-primary mx-1 btn-wine"><i class="bi bi-eye-fill"></i></a>                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <div class="container-fluid p-0 ctn-message d-flex justify-content-center align-items-center flex-column">
+            <div class="container py-5">
+                <p class="w-100 lead text-orange">- Sales number</p>
+                <h3 class="display-1 text-center text-orange mb-5" th:text="${book.sales}"></h3>
+                <div class="d-flex justify-content-center" style="width: 100%;">
+                    <a th:if='${session.loggedUser != null && user.role.toString() == "ADMIN" && user.id == book.user.id}' th:href="'../edit/' + ${book.id}" class="btn btn-outline-primary mx-2 btn-outline-orange w-50">
+                        EDIT
+                    </a>
+                    <a th:if='${session.loggedUser != null}' th:href="'../buy/' + ${book.id}" class="btn btn-primary mx-2 btn-orange w-50">
+                        BUY
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid background-beige">
+            <div class="container">
+                <footer th:replace="~{/fragments/footer :: footer}"></footer>
+            </div>
+        </div>
+        <script th:src="@{/script.js}"></script>
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+            crossorigin="anonymous"
+        ></script>
+    
+</html>

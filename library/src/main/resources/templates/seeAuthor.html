@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html>
+    <head th:replace="~{/fragments/head :: head}"></head>
+    <body>
+        <nav th:replace="~{/fragments/nav :: nav}"></nav>
+
+        <main class="container-fluid ctn-main">
+            <div class="container d-lg-flex pb-5">
+                <div class="w-100 d-flex flex-column justify-content-center align-items-start">
+                    <h1 class="display-1" th:text="${author.name}">Carolina Gonzalez</h1>
+                    <p class="pt-2 lead">
+                        Explore the creative mind behind the stories that captivate you
+                    </p>
+                </div>
+                <div class="w-100 d-flex justify-content-center align-items-center">
+                    <div class="ctn-img">
+                        <img class="item-img" th:src="'/image/authors/' + ${author.id}" alt="Author image" />
+                        <div class="mask"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container d-flex justify-content-center flex-column align-items-center pb-5" >
+                <p class="display-6 p-2 title-wine">Best selling books</p>
+                <p class="pt-2 lead p-lg-5 text-center w-lg-50">
+                    With each work, this talented author continues to captivate his
+                    audience and leave an indelible mark on the world of literature. Know
+                    his best works:
+                </p>
+
+                <div th:if="${empty == null}" class="row w-100 d-flex justify-content-center">
+                    <div th:each="book : ${books}" 
+                         class="col-lg-4 col-md-6 d-flex justify-content-center pt-3">
+                        <div class="card w-100 h-100">
+                            <img
+                                th:src="'/image/books/' + ${book.id}"
+                                class="card-img-top w-100 h-100 object-fit-cover"
+                                alt="Book image"
+                                />
+                            <div class="card-body h-100 d-flex flex-column justify-content-between ">
+                                <div>
+                                    <h5 class="card-title">Book name</h5>
+                                    <p class="card-text" th:text="${book.name}"></p>
+                                </div>
+                                <div class="d-flex justify-content-end">
+                                    <a th:href="'../../books/see/' + ${book.id}"  class="btn btn-primary mx-1 btn-wine">
+                                        <i class="bi bi-eye-fill"></i>
+                                    </a>
+                                    <a
+                                        th:if="${session.loggedUser != null}"
+                                        th:href="'/books/buy/'+${book.id}"
+                                        class="btn btn-primary btn-orange"
+                                        ><i class="bi bi-bag-fill"></i
+                                        ></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div th:if="${empty != null}" class="Card text-white p-3 w-100 rounded-3 mt-5">
+                    <div class="card-body d-flex justify-content-center align-items-center flex-column h-80">
+                        <img th:src="@{/bookNoFound.png}" class="w-100" style="max-width: 400px">
+                        <h5 class="card-title display-2 title-wine">Ups!</h5>
+                        <p class="card-text display-6 title-wine mb-2" th:text="${empty}"></p>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <div class="container-fluid p-0 ctn-message d-flex justify-content-center align-items-center flex-column">
+            <div class="container py-5">
+                <p class="w-100 lead text-orange">- Listen to their message</p>
+                <h3 class="display-1 text-center text-orange mb-5" th:text="${author.message}"></h3>
+                <div class="d-flex justify-content-center" style="width: 100%;">
+                    <a th:if='${session.loggedUser != null && user.role.toString() == "ADMIN" && user.id == author.user.id}' th:href="'../edit/' + ${author.id}" class="btn btn-outline-primary mx-2 btn-outline-orange w-50">
+                        EDIT
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid background-beige">
+            <div class="container">
+                <footer th:replace="~{/fragments/footer :: footer}"></footer>
+            </div>
+        </div>
+        <script th:src="@{/script.js}"></script>
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+            crossorigin="anonymous"
+        ></script>
+    </body>
+</html>

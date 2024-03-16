@@ -1,0 +1,223 @@
+<!doctype html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html lang="es" xmlns:sec='http://www.thymeleaf.org/extras/spring-security'>
+    <head th:replace="~{/fragments/head :: head}"></head>
+    <body>
+
+
+        <nav th:replace="~{/fragments/nav :: nav}"></nav>
+
+        <main>
+
+            <section class="container-fluid background-beige">
+                <div class="row d-flex">
+                    <div class="col-lg-6 p-5 d-flex flex-column justify-content-center" style="height: 100vh">
+                        <h1 th:if='${session.loggedUser == null}' class="text-start display-1">A book can change your life.</h1>
+                        <p th:if='${session.loggedUser == null}' class="text-start pb-3 lead">The most search book site on google.</p>
+                        <h1 th:if='${session.loggedUser != null}' 
+                            th:text=" 'Start your adventure ' + ${session.loggedUser.name}" 
+                            class="text-start display-1">
+                        </h1>
+                        <p th:if='${session.loggedUser != null}' class="text-start pb-3 lead">Find your favorite book.</p>
+                        <div class="row">
+                            <div class="col-lg-10 col-xl-8 col-xl-6">
+                                <form class="d-flex pb-3" style="width: 100%" role="search">
+                                    <input class="form-control me-2 orange-shadow" type="search" placeholder="Search" aria-label="Search"/>
+                                    <button class="btn btn-success btn-orange" type="submit">Search</button>
+                                </form>
+                            </div>
+
+                        </div>
+
+                        <div class="ctn-social-media d-flex flex-column align-items-start ctn-icon-banner">
+                            <p class="lead">follow us -</p>
+                            <div>
+                                <a class="ctn-insta" href=""><i class="bi bi-instagram"></i></a>
+                                <a href=""><i class="bi bi-tiktok"></i></a>
+                                <a href=""><i class="bi bi-whatsapp"></i></a>
+                                <a href=""><i class="bi bi-twitter"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 p-0 position-relative item-banner-img">
+                        <img src="banner-book.png" style="width: 100%; height: 100vh" class="object-fit-cover" alt="your soul is a river book" />
+                        <div><i class="bi bi-heart-fill position-absolute item-heart"></i></div>
+                        <div><i class="bi bi-book-fill position-absolute item-book"></i></div>
+                        <div><i class="bi bi-lightbulb-fill position-absolute item-bulb"></i></div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="container-fluid p-5 ctn-companies">
+                <p class="text-center p-5 h4"> Trusted by thousands of companies around the world </p>
+                <div class="row">
+                    <div class="col d-flex justify-content-center">
+                        <img src="https://img.icons8.com/color/144/000000/disney-logo.png" alt="disney-logo" style="max-width: 80px" />
+                    </div>
+                    <div class="col d-flex justify-content-center">
+                        <img src="https://img.icons8.com/3d-fluency/375/google-logo.png" alt="google-logo" style="max-width: 80px" />
+                    </div>
+                    <div class="col d-flex justify-content-center">
+                        <img src="https://img.icons8.com/external-those-icons-fill-those-icons/96/external-Amazon-Pay-payment-methods-those-icons-fill-those-icons.png"
+                             alt="external-Amazon-Pay-payment-methods-those-icons-fill-those-icons"  style="max-width: 80px" />
+                    </div>
+                    <div class="col d-flex justify-content-center">
+                        <img src="https://img.icons8.com/color/144/microsoft.png" alt="microsoft" style="max-width: 80px" />
+                    </div>
+                    <div class="col d-flex justify-content-center">
+                        <img src="https://img.icons8.com/ios-filled/100/dribbble.png" alt="dribbble" style="max-width: 80px" />
+                    </div>
+                </div>
+            </section>
+
+            <section class="ctn-best-books background-beige">
+                <div class="container py-5">
+                    <p class="text-center display-6 p-2 title-wine">Our Best Selling Books</p>
+                    <div th:if="${emptyBooks == null}" class="row w-100 d-flex justify-content-center">
+                        <div th:each="book : ${books}" 
+                             class="col-lg-3 col-md-6 d-flex justify-content-center pt-3">
+                            <div class="card w-100 h-100">
+                                <img
+                                    th:src="'/image/books/' + ${book.id}"
+                                    class="card-img-top w-100 h-100 object-fit-cover"
+                                    alt="Book image"
+                                    />
+                                <div class="card-body h-100 d-flex flex-column justify-content-between ">
+                                    <div>
+                                        <h5 class="card-title">Book name</h5>
+                                        <p class="card-text" th:text="${book.name}"></p>
+                                    </div>
+                                    <div class="d-flex justify-content-end">
+                                        <a th:href="'../../books/see/' + ${book.id}"  class="btn btn-primary mx-1 btn-wine">
+                                            <i class="bi bi-eye-fill"></i>
+                                        </a>
+                                        <a
+                                            th:if="${session.loggedUser != null}"
+                                            th:href="'/books/buy/'+${book.id}"
+                                            class="btn btn-primary btn-orange"
+                                            ><i class="bi bi-bag-fill"></i
+                                            ></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div th:if="${emptyBooks != null}" class="Card text-white p-3 w-100 rounded-3 pt-5">
+                        <div class="card-body d-flex justify-content-center align-items-center flex-column h-80">
+                            <img th:src="@{/bookNoFound.png}" class="w-100" style="max-width: 400px">
+                            <h5 class="card-title display-2 title-wine">Ups!</h5>
+                            <p class="card-text display-6 title-wine mb-2" th:text="${emptyBooks}"></p>
+                        </div>
+                    </div>
+                    <div class="d-flex w-100 justify-content-center mt-5">
+                        <a th:href="@{/books/see}" class="btn btn-primary mx-1 btn-orange">See books</a>
+                    </div>
+
+                </div>
+            </section>
+
+
+            <section class="ctn-best-author background-beige">
+                <div class="container">
+                    <div th:if="${emptyAuthor == null}"  class="row">
+                        <div class="col-lg-6">
+                            <img
+                                th:src="'/image/authors/' + ${author.id}"
+                                alt="Author of the month"
+                                style="width: 100%; height: 50vh; object-position: top"
+                                class="object-fit-cover"
+                                />
+                        </div>
+                        <div
+                            class="col-lg-6 d-flex flex-column justify-content-center"
+                            style="height: 50vh"
+                            >
+                            <h2 class="pb-5 title-wine" th:text="${author.name}"></h2>
+                            <p th:text="${author.message}"> </p>
+                            <p class="item-author-p">- Author of the month</p>
+                            <a th:href="@{/authors/see}" class="btn btn-primary mx-1 btn-wine w-50">See authors</a>
+                        </div>
+                    </div>
+                    <div th:if="${emptyAuthor != null}" class="Card text-white p-3 w-100 rounded-3 pt-5">
+                        <div class="card-body d-flex justify-content-center align-items-center flex-column h-80">
+                            <img th:src="@{/authorNoFound.png}" class="w-100" style="max-width: 400px">
+                            <h5 class="card-title display-2 title-wine">Ups!</h5>
+                            <p class="card-text display-6 title-wine mb-2" th:text="${emptyAuthor}"></p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+            <section class="ctn-best-publishers background-beige">
+                <div class="container p-5">
+                    <p class="text-center display-6 p-2 title-wine">Favorite publishers</p>
+                    <div th:if="${emptyPublishers == null}" class="row w-100 d-flex justify-content-center">
+                        <div th:each="publisher : ${publishers}" 
+                             class="col-lg-4 col-md-6 d-flex justify-content-center pt-3">
+                            <div class="card w-100 h-100">
+                                <img
+                                    th:src="'/image/publishers/' + ${publisher.id}"
+                                    class="card-img-top w-100 h-100 object-fit-cover"
+                                    alt="Book image"
+                                    />
+                                <div class="card-body h-100 d-flex flex-column justify-content-between ">
+                                    <div>
+                                        <h5 class="card-title">Publisher name</h5>
+                                        <p class="card-text" th:text="${publisher.name}"></p>
+                                    </div>
+                                    <div class="d-flex justify-content-end">
+                                        <a th:href="'../../publishers/see/' + ${publisher.id}"  class="btn btn-primary mx-1 btn-wine">
+                                            <i class="bi bi-eye-fill"></i>
+                                        </a>
+                                        <a
+                                            th:if="${session.loggedUser != null}"
+                                            href="#"
+                                            class="btn btn-primary btn-orange"
+                                            ><i class="bi bi-bag-fill"></i
+                                            ></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div th:if="${emptyPublishers != null}" class="Card text-white p-3 w-100 rounded-3 pt-5">
+                        <div class="card-body d-flex justify-content-center align-items-center flex-column h-80">
+                            <img th:src="@{/publisherNoFound.png}" class="w-100" style="max-width: 400px">
+                            <h5 class="card-title display-2 title-wine">Ups!</h5>
+                            <p class="card-text display-6 title-wine mb-2" th:text="${emptyPublishers}"></p>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex w-100 justify-content-center mt-5">
+                        <a th:href="@{/publishers/see}" class="btn btn-primary mx-1 btn-orange">See publishers</a>
+                    </div>
+                </div>
+            </section>
+
+
+            <section class="container-fluid d-flex justify-content-center align-items-center ctn-image-background" style="height: 100vh">
+                <div class="container d-flex flex-column align-items-center justify-content-center">
+                    <p class="h3 m-3 text-center">Make Your Life Beautiful With Us</p>                
+                    <button type="button" class="btn btn-primary btn-lg m-3 btn-wine">Shop Now</button>
+                </div>
+            </section>
+        </main>
+        <div class="container-fluid background-beige">
+            <div class="container">
+                <footer th:replace="~{/fragments/footer :: footer}"></footer>
+            </div>
+        </div>
+
+
+        <script th:src="@{/script.js}"></script>
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+            crossorigin="anonymous"
+        ></script>
+    </body>
+</html>

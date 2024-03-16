@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html>
+    <head th:replace="~{/fragments/head :: head}"></head>
+    <body>
+        
+        <nav th:replace="~{/fragments/nav :: nav}"></nav>
+
+        <main class="container-fluid ctn-see">
+            <div class="container">
+                <h1 class="display-4">Best Books</h1>
+                <p class="lead">Immerse yourself in the adventure, find the ideal book for you</p>
+                <div th:if="${empty == null}"  class="ctn-grid mt-5 d-block d-lg-grid">
+                    <div th:each="book, iterStat : ${books}" 
+                         th:class="'container background-image rounded d-flex justify-content-between flex-column mt-3 mt-lg-0 grid-item-' + (${iterStat.index + 1})" 
+                         th:style="'background-image: url(/image/books/' + ${book.id} + ')'">
+                        <div class="mt-5">
+                            <p class="text-white" th:text="'N° ' + ${iterStat.index + 1 + books.number * books.size}"></p>
+                            <h2 th:text="${book.name}" class="title-wine"></h2>
+                        </div>
+                        <div class="d-flex justify-content-start mb-5 mt-5 mt-lg-0">
+                            <a th:href="'see/'+${book.id}" class="btn btn-primary mx-1 btn-wine">
+                                <i class="bi bi-eye-fill"></i>
+                            </a>
+                            <a th:if="${session.loggedUser != null}" th:href="'buy/'+${book.id}" class="btn btn-primary btn-orange">
+                                <i class="bi bi-bag-fill"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div th:if="${empty != null}" class="Card text-white p-3 w-100 rounded-3 mt-5">
+                    <div class="card-body d-flex justify-content-center align-items-center flex-column h-80">
+                        <img th:src="@{/bookNoFound.png}" class="w-100" style="max-width: 400px">
+                        <h5 class="card-title display-2 title-wine">Ups!</h5>
+                        <p class="card-text display-6 title-wine mb-2" th:text="${empty}"></p>
+                    </div>
+                </div>
+            </div>
+
+            <div th:if="${empty == null}" class="container d-flex justify-content-center py-5">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination my-custom-pagination">
+                        
+                        <li class="page-item" th:classappend="${books.hasPrevious()} ? '' : 'disabled'">
+                            <a class="page-link" th:if="${books.hasPrevious()}" th:href="@{/books/see(page=${books.previousPageable().pageNumber})}">Previous</a>
+                            <span th:unless="${books.hasPrevious()}" class="page-link">Previous</span>
+                        </li>
+
+                        
+                        <li th:each="i : ${#numbers.sequence(0, books.totalPages - 1)}" 
+                            th:classappend="${i} == ${books.number} ? 'page-item active' : 'page-item'">
+                            <a class="page-link" th:href="@{/books/see(page=${i})}"
+                               th:text="${i + 1}"></a>
+                        </li>
+
+                        <li class="page-item" th:classappend="${books.hasNext()} ? '' : 'disabled'">
+                            <a class="page-link" th:if="${books.hasNext()}" th:href="@{/books/see(page=${books.nextPageable().pageNumber})}">Next</a>
+                            <span th:unless="${books.hasNext()}" class="page-link">Next</span>
+                        </li>
+                        
+                    </ul>
+                </nav>
+            </div>
+
+        </main>
+
+        <div class="container-fluid ctn-footer background-beige">
+            <div class="container">
+                <footer th:replace="~{/fragments/footer :: footer}"></footer>
+            </div>
+        </div>
+        
+        <script th:src="@{/script.js}"></script>
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+            crossorigin="anonymous"
+        ></script>
+    </body>
+</html>

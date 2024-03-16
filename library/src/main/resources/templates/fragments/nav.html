@@ -1,0 +1,94 @@
+<nav id="myNavbar" class="navbar navbar-expand-lg fixed-top">
+    <div class="container-fluid">
+        <a class="navbar-brand" th:href="@{/}">
+            <img class="m-2" style="width: 100px" th:src="@{/logo.png}" alt="logo icon"/></a>
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+            >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div  class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul th:if='${session.loggedUser != null}' class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item dropdown">
+                    <a
+                        class="nav-link dropdown-toggle"
+                        href="#"
+                        role="button"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                        >
+                        Books
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" th:href="@{/books/see}">List Books</a></li>
+                        <li sec:authorize="hasRole('ADMIN')"><a class="dropdown-item" th:href="@{/books/create}">Create Book</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a
+                        class="nav-link dropdown-toggle"
+                        href="#"
+                        role="button"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                        >
+                        Authors
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" th:href="@{/authors/see}">List Authors</a></li>
+                        <li sec:authorize="hasRole('ADMIN')"><a class="dropdown-item" th:href="@{/authors/create}">Create Author</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a
+                        class="nav-link dropdown-toggle"
+                        href="#"
+                        role="button"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                        >
+                        Publishers
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" th:href="@{/publishers/see}">List Publishers</a></li>
+                        <li sec:authorize="hasRole('ADMIN')"><a class="dropdown-item" th:href="@{/publishers/create}">Create Publisher</a></li>
+                    </ul>
+                </li>
+            </ul>
+
+            
+            
+            <ul th:if='${session.loggedUser != null}' class="navbar-nav mb-2 mb-lg-0 ">
+                <li class="nav-item dropdown">
+                    <a class="nav-link " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <div class="ctn-img-user d-flex justify-content-center align-items-center btn-profile " >
+                            <img class="object-fit-cover rounded-circle" th:src="'/image/users/' + ${session.loggedUser.id}" alt="" />
+                        </div>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" th:href="@{/user/dashboard}">Edit</a></li>
+                        <form th:action="@{/logout}" method="post" id="logoutForm">
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                            <button type="submit" class="dropdown-item btn-logout">Log out</button>
+                        </form>
+                    </ul>
+                </li>
+            </ul>
+            <div th:if="${session.loggedUser == null}" class="d-flex justify-content-end" style="width: 100%;">
+                <a th:href="@{/login}" class="btn btn-outline-primary mx-2 btn-outline-orange">
+                    LOGIN
+                </a>
+                <a th:href="@{/signin}" class="btn btn-outline-primary btn-orange">
+                    SIGN IN
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>
+

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html>
+     <head th:replace="~{/fragments/head :: head}"></head>
+    <body>
+        <div class="container-lg-fluid background-beige">
+            <div class="container d-flex justify-content-center align-items-center flex-column" style="height: 100vh; width: 100%">
+                <img th:src="@{/error.png}" alt="Computer vector" style='width: 100%; max-width: 600px'>
+                <h1 class="text-center">Page not found</h1>
+                <p class="text-center">We have not found the page you are trying to access</p>
+                <a th:href="@{../}" class="btn btn-outline-primary btn-orange">RETURN</a>
+            </div>
+        </div>
+        
+    </body>
+</html>
+

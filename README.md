@@ -62,12 +62,9 @@ Autumn Book es una plataforma desarrollada en Java y Spring Boot que simula un s
 
 ## Un vistazo a la interfaz principal
 
-![image](https://github.com/Carolina0709/Autumn-Book/assets/71415586/c628bbcb-98c7-4384-9318-c6f08a100a37)
-![image](https://github.com/Carolina0709/Autumn-Book/assets/71415586/0f841619-8622-44c2-ac57-74af7303b94a)
-![image](https://github.com/Carolina0709/Autumn-Book/assets/71415586/5f9195a6-806c-4089-9e22-2ffd041e056e)
-![image](https://github.com/Carolina0709/Autumn-Book/assets/71415586/aef9dca1-efa2-4b3f-92a5-88c4a467a1e1)
-![image](https://github.com/Carolina0709/Autumn-Book/assets/71415586/61a1b457-4063-456d-b907-d881abf36520)
-![image](https://github.com/Carolina0709/Autumn-Book/assets/71415586/0f063515-cfd1-4710-81cf-fad497028a05)
+https://github.com/Carolina0709/Autumn-Book/assets/71415586/75034c74-6379-4596-9957-6602aa399645
+
+
 
 
 
